@@ -55842,10 +55842,24 @@ console.log(franceUsers);
 // const mostPopularCountries = [...users].filter((c) => c.country).sort();
 // console.log("Pays les plus répandus :", mostPopularCountries);
 
-const usersByCountry = users.reduce((c, u) => {
-  c[u.country] = c[u.country] + 1 || 1;
-  return c;
+// const usersByCountry = users.reduce((c, u) => {
+//   c[u.country] = c[u.country] + 1 || 1;
+//   return c;
+// }, {});
+
+const usersByCountry = users.reduce((acc, u) => {
+  acc[u.country] = {
+    number_of_users: (acc[u.country]?.number_of_users ?? 0) + 1,
+    revenue: (acc[u.country]?.revenue ?? 0) + u.revenue,
+  };
+  return acc;
 }, {});
+
+console.log(usersByCountry); // is an Object object, not a function Object and not exploitable (to my knowledge)
+
+// const mostFrequentCountriesAndRevenue = usersByCountry
+//   .sort((a, b) => b.number_of_users - a.number_of_users)
+//   .slice(0, 5);
 
 // const mostPopularCountries = usersByCountry.sort((a, b) => a.revenue > b.revenue);
 // console.log(mostPopularCountries)
